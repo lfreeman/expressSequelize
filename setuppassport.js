@@ -14,45 +14,22 @@ passport.use("login", new Strategy(
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'})
                 }
-                if (user.password != password) {
-                    return done(null, false, {message: 'Incorrect password.'});
-                }
-                return done(null, user);
+
+                user.checkPassword(password, function (err, isMatch) {
+                    if (err) {
+                        return done(null, false,
+                            {message: "Invalid password."});
+                    }
+                    if (isMatch) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false,
+                            {message: "Invalid password."});
+                    }
+                });
             }
         )
     }));
-
-
-//         , function (err, user) {
-//         if (err) {
-//             return done(err);
-//         }
-//         if (!user) {
-//             return done(null, false, {message: "No user has that username!"});
-//
-//         }
-//         user.checkPassword(password, function (err, isMatch) {
-//             if (err) {
-//                 return done(err);
-//             }
-//             if (isMatch) {
-//                 return done(null, user);
-//             } else {
-//                 return done(null, false,
-//                     {message: "Invalid password."});
-//             }
-//         });
-//     });
-// }));
-
-// models.User.findOne({
-//     where: {
-//         username: req.params.username
-//     }
-// }).then(function (user) {
-//     res.render("profile", {user: user})
-// })
-
 
 module.exports = function () {
     passport.serializeUser(function (user, done) {
