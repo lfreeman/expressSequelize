@@ -1,3 +1,5 @@
+"use strict";
+
 var passport = require('passport');
 var models = require("./models");
 var Strategy = require('passport-local').Strategy;
@@ -9,6 +11,12 @@ passport.use("login", new Strategy(
                 username: username
             }
         }).then(function (user) {
+                if (!user) {
+                    return done(null, false, {message: 'Incorrect username.'})
+                }
+                if (user.password != password) {
+                    return done(null, false, {message: 'Incorrect password.'});
+                }
                 return done(null, user);
             }
         )
