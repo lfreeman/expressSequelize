@@ -1,12 +1,21 @@
 <% include _header %>
 <h1>Edit your profile</h1>
 <form action="/edit" method="post">
-    <input name="displayname" type="text" class="form-control"
-           placeholder="Display name"
-           value="<%= currentUser.displayName || "" %>">
-    <textarea name="bio" class="form-control"
-              placeholder="Tell us about yourself!">
-<%= currentUser.bio || "" %></textarea>
+    <input name="first_name" type="text" class="form-control"
+           placeholder="First Name"
+           value="<%= currentUser.first_name || "" %>">
+    <input name="last_name" type="text" class="form-control"
+           placeholder="Last Name"
+           value="<%= currentUser.last_name || "" %>">
+    <input name="street" type="text" class="form-control"
+           placeholder="Street"
+           value="<%= currentUser.Address.street || "" %>">
+    <input name="city" type="text" class="form-control"
+           placeholder="City"
+           value="<%= currentUser.Address.city || "" %>">
+    <input name="zip" type="text" class="form-control"
+           placeholder="Zip"
+           value="<%= currentUser.Address.zip || "" %>">
     <input type="submit" value="Update" class="btn
 btn-primary btn-block">
 </form>

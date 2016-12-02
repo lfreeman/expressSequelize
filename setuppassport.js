@@ -7,6 +7,7 @@ var Strategy = require('passport-local').Strategy;
 passport.use("login", new Strategy(
     function (username, password, done) {
         models.User.findOne({
+            include: [models.Address],
             where: {
                 username: username
             }
@@ -36,7 +37,7 @@ module.exports = function () {
         done(null, user.id);
     });
     passport.deserializeUser(function (id, done) {
-        models.User.findById(id).then(function (user) {
+        models.User.findById(id, {include: [models.Address]}).then(function (user) {
             done(null, user);
         });
     });

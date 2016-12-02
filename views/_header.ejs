@@ -15,7 +15,7 @@
             <% if (currentUser) { %>
             <li>
                 <a href="/edit">
-                    Hello, <%= currentUser.username %>
+                    Hello, <%= currentUser.getName() %>
                 </a>
             </li>
             <li><a href="/logout">Log out</a></li>

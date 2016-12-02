@@ -13,11 +13,12 @@ module.exports = function (sequelize, DataTypes) {
         username: DataTypes.STRING,
         password: DataTypes.STRING,
         email: DataTypes.STRING,
-        gender: DataTypes.STRING
+        gender: DataTypes.STRING,
+        info: DataTypes.STRING
     }, {
         classMethods: {
             associate: function (models) {
-                // associations can be defined here
+                User.hasOne(models.Address)
             }
         },
         instanceMethods: {
@@ -25,7 +26,11 @@ module.exports = function (sequelize, DataTypes) {
                 bcrypt.compare(guess, this.password, function (err, isMatch) {
                     done(err, isMatch);
                 });
+            },
+            getName: function(){
+                return this.first_name || this.username;
             }
+
         },
         hooks: {
             beforeCreate: function (user, options, done) {
