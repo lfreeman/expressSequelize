@@ -9,6 +9,8 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 Address.belongsTo(models.User);
+                Address.belongsTo(models.Zip)
+                //Address.hasMany(models.ZipDistance, {through: 'zip'});
             }
         }
     });

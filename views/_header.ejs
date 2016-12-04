@@ -2,17 +2,22 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Learn About Me</title>
+    <title>Test</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Learn About Me</a>
+            <a class="navbar-brand" href="/">Test</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <% if (currentUser) { %>
+            <li>
+                <a href="/near">
+                    Near me
+                </a>
+            </li>
             <li>
                 <a href="/edit">
                     Hello, <%= currentUser.getName() %>

@@ -3,6 +3,7 @@
 <a href="/edit" class="pull-right">Edit your profile</a>
 <% } %>
 <h1><%= user.getName() %></h1>
+<h1><%= user.Address.zip %></h1>
 <h2>Joined on <%= user.createdAt %></h2>
 <% if (user.bio) { %>
 <p><%= user.bio %></p>
