@@ -16,10 +16,7 @@ router.get('/', function (req, res) {
     models.User.findAll({include: [models.Address]}).then(function (users) {
         res.render('index', {users: users});
     });
-
-
 });
-
 
 router.get('/near', function (req, res) {
 
@@ -79,22 +76,19 @@ router.post('/signup', function (req, res, next) {
             req.flash('error', 'User already exists');
             return res.redirect('/signup');
         } else {
-
-            models.User.create({username: username, password: password}).then(function (user) {
-                return models.Address.create({}).then(function (address) {
-                    return user.getAddress().then(function (result) {
-                        // result would be false
-                        return user.setAddress(address).then(function () {
-                            return user.getAddress().then(function (result) {
-                                passport.authenticate('login', {
-                                    successRedirect: '/',
-                                    failureRedirect: '/signup',
-                                    failureFlash: true
-                                })(req, res, function () {
-                                });
-                            });
-                        });
-                    });
+            const userPromise = models.User.create({username: username, password: password});
+            const addressPromise = models.Address.create({});
+            Promise.all([
+                userPromise,
+                addressPromise,
+            ]).then((values) => {
+                values[0].setAddress(values[1]);
+            }).then(() => {
+                passport.authenticate('login', {
+                    successRedirect: '/',
+                    failureRedirect: '/signup',
+                    failureFlash: true
+                })(req, res, function () {
                 });
             });
         }
